@@ -44,26 +44,32 @@ if (!fs.existsSync(SQLITE_BIN_PATH)) {
     try {
         // Download Linux binary (Zip)
         execSync(`curl -L https://www.sqlite.org/2023/sqlite-tools-linux-x64-3440000.zip -o "${SQLITE_ZIP_PATH}"`);
-        
+
         // Unzip
         const zip = new AdmZip(SQLITE_ZIP_PATH);
         zip.extractAllTo(__dirname, true);
-        
+
         // Rename folder to predictable name (zip extracts to sqlite-tools-linux-x64-3440000)
         const entries = fs.readdirSync(__dirname);
         const extractedDir = entries.find(e => e.startsWith('sqlite-tools-linux'));
+
         if (extractedDir) {
+            console.log(`Found extracted directory: ${extractedDir}`);
             if (fs.existsSync(SQLITE_BIN_DIR)) fs.rmSync(SQLITE_BIN_DIR, { recursive: true });
             fs.renameSync(path.join(__dirname, extractedDir), SQLITE_BIN_DIR);
+        } else {
+            console.error("Could not find extracted sqlite directory. Contents:", entries);
         }
 
         // Cleanup Zip
         fs.unlinkSync(SQLITE_ZIP_PATH);
-        
+
         // Make executable
         if (fs.existsSync(SQLITE_BIN_PATH)) {
             execSync(`chmod +x "${SQLITE_BIN_PATH}"`);
-            console.log("SQLite3 downloaded and installed.");
+            console.log(`SQLite3 installed at: ${SQLITE_BIN_PATH}`);
+        } else {
+            console.error(`SQLite3 binary not found at: ${SQLITE_BIN_PATH}`);
         }
     } catch (e) {
         console.error("Failed to setup SQLite3:", e.message);
@@ -77,6 +83,7 @@ if (!fs.existsSync(DB_PATH)) {
         try {
             // Use the downloaded sqlite3 if available, otherwise try system
             const sqliteCmd = fs.existsSync(SQLITE_BIN_PATH) ? `"${SQLITE_BIN_PATH}"` : 'sqlite3';
+            console.log(`Using SQLite command: ${sqliteCmd}`);
             execSync(`${sqliteCmd} "${DB_PATH}" < "${SQL_PATH}"`);
             console.log("Database initialized.");
         } catch (e) {
@@ -108,7 +115,7 @@ fs.writeFileSync(initScriptPath, bashInit);
 
 const ttyd = spawn(TTYD_PATH, [
     '-p', TTYD_PORT.toString(),
-    '-W', // Writable
+    // '-W', // Removed: Deprecated/Unknown option in newer ttyd versions
     '-t', 'fontSize=14',
     '-t', 'fontFamily="Menlo, Consolas, monospace"',
     '-t', 'theme={"background":"#0d1117", "foreground":"#c9d1d9", "cursor":"#00ff00"}',
