@@ -39,11 +39,13 @@ if (!fs.existsSync(DB_PATH)) {
     console.log("Initializing Database...");
     if (fs.existsSync(SQL_PATH)) {
         try {
-            // We use sqlite3 command line tool. Ensure it's installed.
+            // Try using sqlite3 to create the DB from SQL
             execSync(`sqlite3 "${DB_PATH}" < "${SQL_PATH}"`);
-            console.log("Database initialized.");
+            console.log("Database initialized via sqlite3.");
         } catch (e) {
-            console.error("Failed to initialize database (sqlite3 might be missing):", e.message);
+            console.error("Failed to initialize database via sqlite3:", e.message);
+            console.log("Attempting to create empty DB file...");
+            fs.writeFileSync(DB_PATH, '');
         }
     } else {
         console.error("setup_challenge.sql not found!");
@@ -53,16 +55,28 @@ if (!fs.existsSync(DB_PATH)) {
 // --- 2. Start ttyd (Terminal) ---
 
 console.log("Starting ttyd...");
-// We start ttyd in the DATA_DIR so the user only sees files in that folder (the .db file)
+// Custom bash prompt to be smaller: "ghost$ "
+const bashInit = `
+export PS1="\\[\\033[01;32m\\]ghost$ \\[\\033[00m\\]"
+alias ls='ls --color=auto'
+clear
+echo "Connected to Secure Shell..."
+echo "Type 'ls' to see files."
+`;
+
+// Write init script
+const initScriptPath = path.join(DATA_DIR, '.bashrc');
+fs.writeFileSync(initScriptPath, bashInit);
+
 const ttyd = spawn(TTYD_PATH, [
     '-p', TTYD_PORT.toString(),
     '-W', // Writable
-    '-t', 'fontSize=16',
-    '-t', 'fontFamily="Share Tech Mono", monospace',
-    '-t', 'theme={"background":"#0d1117", "foreground":"#00ff00", "cursor":"#00ff00"}',
-    'bash'
+    '-t', 'fontSize=14', // Smaller font
+    '-t', 'fontFamily="Menlo, Consolas, monospace"',
+    '-t', 'theme={"background":"#0d1117", "foreground":"#c9d1d9", "cursor":"#00ff00"}',
+    'bash', '--rcfile', '.bashrc'
 ], {
-    cwd: DATA_DIR // <--- CRITICAL: Sets the working directory for the terminal session
+    cwd: DATA_DIR
 });
 
 ttyd.stdout.on('data', (data) => {
@@ -73,25 +87,18 @@ ttyd.stderr.on('data', (data) => {
     console.error(`[ttyd] ${data}`);
 });
 
-ttyd.on('close', (code) => {
-    console.log(`ttyd process exited with code ${code}`);
-});
-
 // --- 3. Express Server Configuration ---
 
-// Proxy /terminal requests to ttyd
 app.use('/terminal', createProxyMiddleware({
     target: `http://127.0.0.1:${TTYD_PORT}`,
     ws: true,
     changeOrigin: true,
     pathRewrite: { '^/terminal': '' },
-    logLevel: 'error' // Reduce noise
+    logLevel: 'error'
 }));
 
-// Serve static files from 'public' folder
 app.use(express.static(PUBLIC_DIR));
 
-// Start Server
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
     console.log(`Serving files from: ${PUBLIC_DIR}`);
