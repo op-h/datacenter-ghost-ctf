@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLASSIFIED DOCUMENT: BRIEFING</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* Variables */
+        :root {
+            --bg-color: #050a0e;
+            --panel-bg: #0d1218;
+            --text-color: #00ff41;
+            --accent-color: #008f11;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: #c9d1d9;
+            font-family: 'Share Tech Mono', monospace;
+            line-height: 1.6;
+            padding: 20px;
+            text-shadow: 0 0 2px rgba(0, 255, 65, 0.3);
+        }
+
+        /* CRT Effect Overlay */
+        .crt::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 999;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            position: fixed;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #161b22;
+            padding: 40px;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Markdown Styles */
+        h1,
+        h2,
+        h3 {
+            border-bottom: 1px solid #21262d;
+            padding-bottom: .3em;
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #ff5555;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        code {
+            background-color: rgba(110, 118, 129, 0.4);
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            font-family: monospace;
+        }
+
+        pre {
+            background-color: #0d1117;
+            padding: 16px;
+            overflow: auto;
+            border-radius: 6px;
+            border: 1px solid #30363d;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+        }
+
+        blockquote {
+            border-left: 0.25em solid #f85149;
+            color: #8b949e;
+            padding: 0 1em;
+            background: rgba(248, 81, 73, 0.1);
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        table tr {
+            background-color: #161b22;
+            border-top: 1px solid #21262d;
+        }
+
+        table tr:nth-child(2n) {
+            background-color: #0d1117;
+        }
+
+        table th,
+        table td {
+            padding: 6px 13px;
+            border: 1px solid #30363d;
+        }
+
+        a {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+
+        hr {
+            height: 0.25em;
+            padding: 0;
+            margin: 24px 0;
+            background-color: #30363d;
+            border: 0;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #58a6ff;
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body class="crt">
+    <div class="container">
+        <div id="content">
+            <div class="loading">
+                ACCESSING SECURE ARCHIVE...<br>
+                DECRYPTING FILE...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fetch the Markdown file and render it
+        fetch('mission_briefing.md')
+            .then(response => {
+                if (!response.ok) throw new Error("NETWORK ERROR: CANNOT ACCESS FILE");
+                return response.text();
+            })
+            .then(text => {
+                document.getElementById('content').innerHTML = marked.parse(text);
+            })
+            .catch(error => {
+                document.getElementById('content').innerHTML = `<h1 style="color:red">ACCESS DENIED</h1><p>Error loading document: ${error.message}</p>`;
+            });
+    </script>
+</body>
+
+</html>

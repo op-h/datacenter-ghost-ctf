@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CipherTech Facility Blueprint</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Courier Prime', monospace;
+            background-color: #002b36; /* Deep Blueprint Blue */
+            color: #839496;
+        }
+
+        .blueprint-grid {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .room {
+            border: 2px solid #fff;
+            background-color: rgba(0, 43, 54, 0.8);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .room:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(42, 161, 152, 0.5);
+        }
+
+        .door {
+            position: absolute;
+            background-color: #cb4b16; /* Orange for doors */
+            z-index: 10;
+        }
+
+        .door-h { width: 40px; height: 6px; }
+        .door-v { width: 6px; height: 40px; }
+
+        .label {
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 0 #000;
+        }
+
+        .restricted {
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(220, 50, 47, 0.1),
+                rgba(220, 50, 47, 0.1) 10px,
+                rgba(220, 50, 47, 0.2) 10px,
+                rgba(220, 50, 47, 0.2) 20px
+            );
+            border-color: #dc322f;
+        }
+
+        /* CRT Effect Overlay */
+        .crt::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 999;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            position: fixed;
+        }
+    </style>
+</head>
+<body class="blueprint-grid min-h-screen p-8 crt">
+
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div class="border-b-4 border-white mb-8 pb-4 flex justify-between items-end">
+            <div>
+                <h1 class="text-4xl text-white font-bold">CIPHERTECH HQ</h1>
+                <p class="text-cyan-400">FACILITY SCHEMATIC V.2.4</p>
+            </div>
+            <div class="text-right text-xs text-white">
+                <p>SECURE DOCUMENT</p>
+                <p>AUTH: SECURITY_ADMIN</p>
+            </div>
+        </div>
+
+        <!-- FLOOR 2 -->
+        <div class="mb-12">
+            <h2 class="text-2xl text-white mb-4 border-l-4 border-cyan-400 pl-3">FLOOR 2 (RESTRICTED ACCESS)</h2>
+            <div class="grid grid-cols-12 gap-4 h-96 relative border-4 border-white p-4">
+                
+                <!-- Engineering North -->
+                <div class="col-span-4 row-span-2 room flex items-center justify-center">
+                    <span class="label">Engineering Cubes (N)</span>
+                    <div class="door door-v right-0 top-1/2 -mr-1"></div> <!-- Door to Hallway -->
+                </div>
+
+                <!-- Server Room -->
+                <div class="col-span-4 row-span-2 room restricted flex flex-col items-center justify-center">
+                    <span class="label text-red-400">Server Room</span>
+                    <span class="text-xs text-red-300 mt-1">Auth Required</span>
+                    <div class="door door-h bottom-0 left-1/2 -mb-1"></div>
+                </div>
+
+                <!-- Lab 2 -->
+                <div class="col-span-4 row-span-2 room flex items-center justify-center">
+                    <span class="label">R&D Lab 2</span>
+                    <div class="door door-h bottom-0 left-1/2 -mb-1"></div>
+                </div>
+
+                <!-- Hallway -->
+                <div class="col-span-12 row-span-1 bg-transparent flex items-center justify-center relative">
+                    <span class="text-white text-opacity-50 tracking-[1em]">SECURE HALLWAY</span>
+                </div>
+
+                <!-- Lab 1 (Crime Scene) -->
+                <div class="col-span-4 row-span-2 room restricted flex flex-col items-center justify-center border-red-500">
+                    <span class="label text-red-500">R&D Lab 1</span>
+                    <span class="text-xs text-red-400 mt-1 animate-pulse">** CRIME SCENE **</span>
+                    <div class="door door-h top-0 right-10 -mt-1"></div>
+                </div>
+
+                <!-- Elevator / Stairs -->
+                <div class="col-span-4 row-span-2 room flex items-center justify-center bg-slate-800">
+                    <span class="label text-cyan-400">Elevators / Utilities</span>
+                </div>
+
+                <!-- Engineering South -->
+                <div class="col-span-4 row-span-2 room flex items-center justify-center">
+                    <span class="label">Engineering Cubes (S)</span>
+                    <div class="door door-v left-0 top-10 -ml-1"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FLOOR 1 -->
+        <div>
+            <h2 class="text-2xl text-white mb-4 border-l-4 border-cyan-400 pl-3">FLOOR 1 (PUBLIC ACCESS)</h2>
+            <div class="grid grid-cols-12 gap-4 h-96 relative border-4 border-white p-4">
+                
+                <!-- Sales -->
+                <div class="col-span-4 row-span-2 room flex items-center justify-center">
+                    <span class="label">Sales Bullpen</span>
+                    <div class="door door-h bottom-0 right-10 -mb-1"></div>
+                </div>
+
+                <!-- Guard Post -->
+                <div class="col-span-4 row-span-2 room flex items-center justify-center">
+                    <span class="label">Security / Guard Post</span>
+                    <div class="door door-h bottom-0 left-10 -mb-1"></div>
+                </div>
+
+                <!-- Breakroom -->
+                <div class="col-span-4 row-span-2 room flex items-center justify-center">
+                    <span class="label">Breakroom</span>
+                    <div class="door door-v left-0 bottom-10 -ml-1"></div>
+                </div>
+
+                <!-- Hallway -->
+                <div class="col-span-12 row-span-1 bg-transparent flex items-center justify-center">
+                    <span class="text-white text-opacity-50 tracking-[1em]">MAIN HALLWAY</span>
+                </div>
+
+                <!-- Main Lobby -->
+                <div class="col-span-4 row-span-2 room flex flex-col items-center justify-center border-cyan-400 border-dashed">
+                    <span class="label text-cyan-300">Main Lobby</span>
+                    <span class="text-xs text-cyan-500">Entry/Exit Log Point</span>
+                    <div class="door door-h top-0 left-1/2 -mt-1"></div> <!-- Interior Door -->
+                    <div class="absolute bottom-0 w-1/2 h-2 bg-green-500"></div> <!-- Main Entrance -->
+                </div>
+
+                <!-- Reception -->
+                <div class="col-span-4 row-span-2 room flex items-center justify-center">
+                    <span class="label">Reception</span>
+                </div>
+
+                <!-- HR -->
+                <div class="col-span-4 row-span-2 room flex items-center justify-center">
+                    <span class="label">HR Office</span>
+                    <div class="door door-v left-0 top-10 -ml-1"></div>
+                </div>
+
+            </div>
+        </div>
+        
+        <div class="mt-8 text-center text-xs text-gray-500">
+            <p>CONFIDENTIAL PROPERTY OF CIPHERTECH. DO NOT DISTRIBUTE.</p>
+        </div>
+    </div>
+
+</body>
+</html>
