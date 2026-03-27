@@ -56,11 +56,11 @@ To close this case and capture the flag, you must answer these five specific que
 Construct the flag by concatenating your findings with underscores.
 
 **Format:**
-`CTF{MachineIP_OwnerUsername_CulpritUsername_EscapeLogID_DestIP}`
+`KHANA{MachineIP_OwnerUsername_CulpritUsername_EscapeLogID_DestIP}`
 
 **Example:**
 > If the IP was `10.0.0.5`, Owner was `alice`, Culprit was `bob`, Escape Log ID was `99`, and the destination was `1.1.1.1`:
 >
-> **Flag:** `CTF{10.0.0.5_alice_bob_99_1.1.1.1}`
+> **Flag:** `KHANA{10.0.0.5_alice_bob_99_1.1.1.1}`
 
 *Trust no one. Verify everything.*
