@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facility Blueprint</title>
+  <meta name="description" content="CipherTech HQ floor plans with every badge reader, for the Datacenter Ghost CTF.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/ghost.css">
+  <style>
+    .plan { background: #041a24; border: 1px solid #0f3a4c; border-radius: var(--radius); padding: 14px; margin-top: 14px;
+            background-image: linear-gradient(rgba(120,200,255,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(120,200,255,.06) 1px, transparent 1px);
+            background-size: 20px 20px; }
+    .plan svg { display: block; width: 100%; height: auto; }
+    .room { fill: rgba(4, 26, 36, .85); stroke: #cfe8f5; stroke-width: 2; }
+    .room.restricted { fill: url(#hatch); stroke: #ff6b6b; }
+    .room.hall { fill: rgba(86,212,245,.05); stroke: #5a8aa0; stroke-dasharray: 6 5; stroke-width: 1.5; }
+    .room.core { fill: rgba(255,255,255,.04); stroke: #5a8aa0; }
+    .lbl { fill: #fff; font: 700 15px var(--mono); letter-spacing: .06em; text-anchor: middle; text-transform: uppercase; }
+    .sub { fill: #8fb3c4; font: 12px var(--mono); text-anchor: middle; }
+    .sub.red { fill: #ff8b8b; }
+    .reader { fill: var(--amber); stroke: #000; stroke-width: 1.5; }
+    .exit { fill: var(--accent); stroke: #000; stroke-width: 1.5; }
+    .door { stroke: #ffb547; stroke-width: 6; }
+    .extdoor { stroke: var(--accent); stroke-width: 8; }
+    .bench { fill: rgba(255,255,255,.06); stroke: #8fb3c4; stroke-width: 1; }
+    .bench-l { fill: #8fb3c4; font: 11px var(--mono); text-anchor: middle; }
+    .floorhead { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 40px; }
+    .floorhead h2 { margin: 0; }
+    .legend { display: flex; flex-wrap: wrap; gap: 18px; font-family: var(--mono); font-size: 12.5px; color: var(--text-dim); margin-top: 18px; }
+    .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+    .legend i.sq { border-radius: 2px; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">DATACENTER<span>GHOST</span></a>
+    <nav class="nav">
+      <a href="index.html">Case</a>
+      <a href="briefing.html">Briefing</a>
+      <a class="active" href="blueprint.html">Blueprint</a>
+      <a href="console.html">Evidence Console</a>
+      <a href="submit.html">Submit Flag</a>
+    </nav>
+    <div class="clock" data-clock>--:--:-- UTC</div>
+  </header>
+
+  <main class="wrap">
+    <p class="eyebrow">CipherTech HQ · Facility schematic v2.4</p>
+    <h1>Facility blueprint</h1>
+    <p class="lead">Two floors, fourteen badge readers, two ways out of the building. Reader names below match the
+      <code>door</code> column in <code>door_logs</code> exactly.</p>
+
+    <div class="legend">
+      <span><i style="background:var(--accent)"></i>Building exit reader</span>
+      <span><i style="background:var(--amber)"></i>Interior badge reader</span>
+      <span><i class="sq" style="background:repeating-linear-gradient(45deg,#ff6b6b55 0 3px,transparent 3px 6px);border:1px solid #ff6b6b"></i>Restricted area</span>
+    </div>
+
+    <!-- ================= FLOOR 2 ================= -->
+    <div class="floorhead"><h2>Floor 2 · Restricted</h2><span class="tag red">Badge-only from the stairwell</span></div>
+    <div class="plan">
+      <svg viewBox="0 0 1000 520" role="img" aria-label="Floor 2 plan">
+        <defs>
+          <pattern id="hatch" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="12" height="12" fill="rgba(40,8,10,.85)"/>
+            <line x1="0" y1="0" x2="0" y2="12" stroke="rgba(255,107,107,.28)" stroke-width="5"/>
+          </pattern>
+        </defs>
+        <rect class="room" x="20" y="20" width="300" height="200"/>
+        <text class="lbl" x="170" y="115">Engineering North</text>
+        <text class="sub" x="170" y="138">open plan · 24 desks</text>
+        <line class="door" x1="150" y1="220" x2="190" y2="220"/><circle class="reader" cx="205" cy="232" r="7"/>
+
+        <rect class="room restricted" x="340" y="20" width="260" height="200"/>
+        <text class="lbl" x="470" y="110">Server Room</text>
+        <text class="sub red" x="470" y="133">IT profile only</text>
+        <line class="door" x1="450" y1="220" x2="490" y2="220"/><circle class="reader" cx="505" cy="232" r="7"/>
+
+        <rect class="room restricted" x="620" y="20" width="360" height="200"/>
+        <text class="lbl" x="800" y="110">R&amp;D Lab 2</text>
+        <text class="sub red" x="800" y="133">R&amp;D / Chimera engineering</text>
+        <line class="door" x1="780" y1="220" x2="820" y2="220"/><circle class="reader" cx="835" cy="232" r="7"/>
+
+        <rect class="room hall" x="20" y="240" width="960" height="70"/>
+        <text class="sub" x="330" y="280" style="letter-spacing:.5em">FLOOR 2 HALLWAY</text>
+
+        <rect class="room" x="20" y="330" width="280" height="170"/>
+        <text class="lbl" x="160" y="410">Engineering South</text>
+        <text class="sub" x="160" y="433">open plan · 18 desks</text>
+        <line class="door" x1="140" y1="330" x2="180" y2="330"/><circle class="reader" cx="195" cy="318" r="7"/>
+
+        <rect class="room restricted" x="320" y="330" width="280" height="170"/>
+        <text class="lbl" x="460" y="365">R&amp;D Lab 1</text>
+        <text class="sub red" x="460" y="386">Project Chimera</text>
+        <rect class="bench" x="340" y="405" width="55" height="75"/><text class="bench-l" x="367" y="447">B1</text>
+        <rect class="bench" x="403" y="405" width="55" height="75"/><text class="bench-l" x="430" y="447">B2</text>
+        <rect class="bench" x="466" y="405" width="55" height="75"/><text class="bench-l" x="493" y="447">B3</text>
+        <rect class="bench" x="529" y="405" width="55" height="75"/><text class="bench-l" x="556" y="447">B4</text>
+        <line class="door" x1="540" y1="330" x2="580" y2="330"/><circle class="reader" cx="595" cy="318" r="7"/>
+
+        <rect class="room core" x="620" y="330" width="140" height="170"/>
+        <text class="lbl" x="690" y="410" style="font-size:13px">Stairs / Lift</text>
+        <line class="door" x1="670" y1="330" x2="710" y2="330"/><circle class="reader" cx="725" cy="318" r="7"/>
+        <text class="sub" x="690" y="440">Floor 2 Hallway</text>
+        <text class="sub" x="690" y="456">reader</text>
+
+        <rect class="room core" x="780" y="330" width="200" height="170"/>
+        <text class="lbl" x="880" y="410" style="font-size:13px">Storage / Utility</text>
+      </svg>
+    </div>
+
+    <!-- ================= FLOOR 1 ================= -->
+    <div class="floorhead"><h2>Floor 1 · General access</h2><span class="tag green">Two building exits</span></div>
+    <div class="plan">
+      <svg viewBox="0 0 1000 540" role="img" aria-label="Floor 1 plan">
+        <defs>
+          <pattern id="hatch1" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="12" height="12" fill="rgba(40,8,10,.85)"/>
+            <line x1="0" y1="0" x2="0" y2="12" stroke="rgba(255,107,107,.28)" stroke-width="5"/>
+          </pattern>
+        </defs>
+        <rect class="room" x="20" y="20" width="300" height="200"/>
+        <text class="lbl" x="170" y="115">Sales Bullpen</text>
+        <line class="door" x1="150" y1="220" x2="190" y2="220"/><circle class="reader" cx="205" cy="232" r="7"/>
+
+        <rect class="room" x="340" y="20" width="180" height="200"/>
+        <text class="lbl" x="430" y="110">Guard Post</text>
+        <text class="sub" x="430" y="133">CCTV · dock alarm</text>
+        <line class="door" x1="410" y1="220" x2="450" y2="220"/><circle class="reader" cx="465" cy="232" r="7"/>
+
+        <rect class="room restricted" style="fill:url(#hatch1)" x="540" y="20" width="200" height="200"/>
+        <text class="lbl" x="640" y="115">HR Office</text>
+        <line class="door" x1="620" y1="220" x2="660" y2="220"/><circle class="reader" cx="675" cy="232" r="7"/>
+
+        <rect class="room" x="760" y="20" width="220" height="200"/>
+        <text class="lbl" x="870" y="115">Breakroom</text>
+        <line class="door" x1="850" y1="220" x2="890" y2="220"/><circle class="reader" cx="905" cy="232" r="7"/>
+
+        <rect class="room hall" x="20" y="240" width="960" height="70"/>
+        <text class="sub" x="500" y="280" style="letter-spacing:.5em">FLOOR 1 HALLWAY</text>
+        <circle class="reader" cx="335" cy="298" r="7"/>
+
+        <rect class="room" x="20" y="330" width="300" height="170"/>
+        <text class="lbl" x="170" y="405">Main Lobby</text>
+        <text class="sub" x="170" y="428">turnstiles · entry &amp; exit logged</text>
+        <line class="extdoor" x1="110" y1="500" x2="230" y2="500"/><circle class="exit" cx="245" cy="512" r="8"/>
+        <text class="sub" x="170" y="530" style="fill:var(--accent)">MAIN ENTRANCE</text>
+
+        <rect class="room" x="340" y="330" width="260" height="170"/>
+        <text class="lbl" x="470" y="405">Reception</text>
+        <text class="sub" x="470" y="428">temp badge printer</text>
+        <line class="door" x1="450" y1="330" x2="490" y2="330"/><circle class="reader" cx="505" cy="318" r="7"/>
+
+        <rect class="room core" x="620" y="330" width="140" height="170"/>
+        <text class="lbl" x="690" y="410" style="font-size:13px">Stairs / Lift</text>
+
+        <rect class="room" x="780" y="330" width="200" height="170"/>
+        <text class="lbl" x="880" y="400">Loading Dock</text>
+        <text class="sub" x="880" y="423">alarmed · rear exit</text>
+        <line class="door" x1="820" y1="330" x2="860" y2="330"/>
+        <line class="extdoor" x1="980" y1="370" x2="980" y2="460"/><circle class="exit" cx="966" cy="480" r="8"/>
+      </svg>
+    </div>
+
+    <h2>Reader index</h2>
+    <div class="panel table-scroll" style="padding:6px 8px">
+      <table class="simple">
+        <thead><tr><th>door (as logged)</th><th>Floor</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>Main Lobby</code></td><td>1</td><td>Building exit. Turnstiles log ENTRY and EXIT.</td></tr>
+          <tr><td><code>Loading Dock</code></td><td>1</td><td>Building exit. Alarmed roll-up door, see <code>helpdesk_tickets</code>.</td></tr>
+          <tr><td><code>Reception</code></td><td>1</td><td>Staff side of the front desk.</td></tr>
+          <tr><td><code>Floor 1 Hallway</code></td><td>1</td><td>Interior.</td></tr>
+          <tr><td><code>Sales Bullpen</code></td><td>1</td><td>Interior.</td></tr>
+          <tr><td><code>Guard Post</code></td><td>1</td><td>Security staff.</td></tr>
+          <tr><td><code>HR Office</code></td><td>1</td><td>Restricted.</td></tr>
+          <tr><td><code>Breakroom</code></td><td>1</td><td>Interior.</td></tr>
+          <tr><td><code>Floor 2 Hallway</code></td><td>2</td><td>Stairwell/lift landing. The only way onto floor 2.</td></tr>
+          <tr><td><code>Engineering North</code></td><td>2</td><td>Interior.</td></tr>
+          <tr><td><code>Engineering South</code></td><td>2</td><td>Interior.</td></tr>
+          <tr><td><code>Server Room</code></td><td>2</td><td>Restricted.</td></tr>
+          <tr><td><code>R&amp;D Lab 1</code></td><td>2</td><td>Restricted. Project Chimera benches B1–B4.</td></tr>
+          <tr><td><code>R&amp;D Lab 2</code></td><td>2</td><td>Restricted.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="faint" style="margin-top:14px">Readers log a swipe in the direction the person is heading. Tailgating isn't logged, and neither is walking through a door someone else is holding open.</p>
+  </main>
+
+  <footer class="site">CONFIDENTIAL PROPERTY OF CIPHERTECH · DO NOT DISTRIBUTE · (it's fictional, distribute away)</footer>
+  <script src="assets/js/common.js"></script>
+</body>
+</html>

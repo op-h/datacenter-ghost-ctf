@@ -1,4 +1,9 @@
-node_modules/
-.env
 .DS_Store
-ttyd
+Thumbs.db
+.env
+node_modules/
+
+# author-only material never belongs in the public repo
+SOLUTION*.md
+author/
+*.db-journal

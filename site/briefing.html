@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Briefing</title>
+  <meta name="description" content="Mission briefing for Datacenter Ghost: the incident, the evidence, the six questions and the flag format.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/ghost.css">
+  <style>
+    .stamp { display: inline-block; font-family: var(--mono); font-weight: 800; letter-spacing: .2em; color: var(--red);
+             border: 2px solid var(--red); padding: 4px 12px; transform: rotate(-2deg); margin-bottom: 18px; font-size: 13px; }
+    .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin: 22px 0 8px; }
+    .meta div { border-left: 2px solid var(--line-2); padding-left: 12px; }
+    .meta small { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-faint); }
+    .meta span { font-family: var(--mono); color: #fff; font-size: 14px; }
+    .tables { columns: 2 260px; column-gap: 24px; font-size: 14px; }
+    .tables div { break-inside: avoid; padding: 6px 0; border-bottom: 1px dashed var(--line); }
+    .tables code { color: var(--accent); background: transparent; border: 0; padding: 0; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">DATACENTER<span>GHOST</span></a>
+    <nav class="nav">
+      <a href="index.html">Case</a>
+      <a class="active" href="briefing.html">Briefing</a>
+      <a href="blueprint.html">Blueprint</a>
+      <a href="console.html">Evidence Console</a>
+      <a href="submit.html">Submit Flag</a>
+    </nav>
+    <div class="clock" data-clock>--:--:-- UTC</div>
+  </header>
+
+  <main class="wrap narrow">
+    <div class="stamp">TOP SECRET // EYES ONLY</div>
+    <p class="eyebrow">Case file #CHIMERA-99</p>
+    <h1>Mission briefing</h1>
+
+    <div class="meta">
+      <div><small>Incident date</small><span>2023-11-14</span></div>
+      <div><small>Site</small><span>CipherTech HQ</span></div>
+      <div><small>Your role</small><span>Lead DFIR analyst</span></div>
+      <div><small>Status</small><span style="color:var(--red)">Unsolved</span></div>
+    </div>
+
+    <h2>The incident</h2>
+    <p>At <b>15:13:52 UTC</b> the network IDS raised a high-severity alert: a single internal host had pushed more than two
+      gigabytes through the corporate egress proxy in under ten minutes. By the time IT Operations picked up the page, the
+      transfer had finished.</p>
+    <p>What left was the tape-out mask set for <b>Project Chimera</b>, CipherTech's prototype quantum processor. The
+      obvious suspect is the engineer whose account ran the upload. The CISO doesn't think it's that simple.</p>
+
+    <div class="callout red">
+      <p><b>Working theory from Security:</b> an insider was physically inside the building, sat down at somebody else's
+        machine and used it to get the data out. Prove it or disprove it. Then name them.</p>
+    </div>
+
+    <h2>What you have</h2>
+    <p>A forensic snapshot of every log source we could collect, merged into one SQLite database
+      (<a href="evidence/ciphertech.db" download>ciphertech.db</a>). Open it in the
+      <a href="console.html">evidence console</a> or in your own tools. The <a href="blueprint.html">facility blueprint</a>
+      shows where every badge reader is.</p>
+    <div class="tables">
+      <div><code>log_sources</code> — what produced each table</div>
+      <div><code>employees</code> — HR directory</div>
+      <div><code>access_profiles</code> — which doors each profile opens</div>
+      <div><code>access_cards</code> — permanent badges</div>
+      <div><code>temp_badges</code> — reception-issued temporary cards</div>
+      <div><code>door_logs</code> — every badge swipe</div>
+      <div><code>workstations</code> — asset inventory</div>
+      <div><code>dhcp_leases</code> — IP ↔ MAC over time</div>
+      <div><code>endpoint_events</code> — EDR: logons, USB, processes</div>
+      <div><code>ids_alerts</code> — Suricata alerts</div>
+      <div><code>network_flows</code> — internal NetFlow</div>
+      <div><code>proxy_logs</code> — egress proxy</div>
+      <div><code>dns_logs</code> — internal resolver</div>
+      <div><code>file_system</code> — EDR file telemetry</div>
+      <div><code>it_assets</code> — hardware register</div>
+      <div><code>helpdesk_tickets</code> — ServiceDesk</div>
+      <div><code>chat_logs</code> — CipherChat messages</div>
+      <div><code>email_metadata</code> — message trace</div>
+      <div><code>witness_statements</code> — HR interviews</div>
+    </div>
+
+    <h2>Your objectives</h2>
+    <ol class="objectives">
+      <li><div><b>The machine.</b> The <code>hostname</code> of the workstation the data was uploaded from.</div></li>
+      <li><div><b>The owner.</b> The <code>username</code> of the employee that workstation is assigned to.</div></li>
+      <li><div><b>The ghost.</b> The <code>username</code> of the person who was actually at the keyboard.</div></li>
+      <li><div><b>The exit.</b> The <code>door_logs.id</code> of the swipe where the ghost left the building after the theft.</div></li>
+      <li><div><b>The drop.</b> The public IPv4 address of the server that received the data.</div></li>
+      <li><div><b>The payload.</b> The decoded file name of the archive that was stolen, including its extension.</div></li>
+    </ol>
+
+    <h2>Flag format</h2>
+    <p>Join the six answers with underscores, in order, inside <code>KHANA{ }</code>:</p>
+    <div class="flagbox">KHANA{hostname_owner_ghost_exitid_dropip_filename}</div>
+    <p class="dim" style="margin-top:12px">Made-up example: <code>KHANA{FIN-WS09_jdoe_asmith_123_192.0.2.10_q3-report.zip}</code>.
+      The checker ignores upper/lower case, but every character counts. Submit on the <a href="submit.html">flag page</a>.</p>
+
+    <h2 id="field-notes">Field notes</h2>
+    <div class="callout">
+      <p>Every answer is in the database, and every one has at least one plausible wrong answer next to it.
+        If a single query gives you an answer, try to disprove it with a second log source before you trust it.</p>
+    </div>
+    <details class="hint"><summary>Hint 1 · Where to start</summary>
+      <div>Start from the alert, not from the people. Read <code>log_sources</code> in full before you join any two tables.</div>
+    </details>
+    <details class="hint"><summary>Hint 2 · Machines</summary>
+      <div>An IP address identifies a machine only at a particular moment. Inventory snapshots age.</div>
+    </details>
+    <details class="hint"><summary>Hint 3 · People</summary>
+      <div>An account is not a person, and a badge is not a person either. When two log sources disagree about time,
+        check whether they even use the same clock.</div>
+    </details>
+    <details class="hint"><summary>Hint 4 · Destinations</summary>
+      <div>A proxy only records the name the client asked for. A name can point at many addresses over one afternoon.</div>
+    </details>
+    <details class="hint"><summary>Hint 5 · Files</summary>
+      <div>The telemetry pipeline encodes file names, and not always the same way. The command that did the copying tells you
+        which files it would have picked up.</div>
+    </details>
+
+    <p class="faint" style="margin-top:36px">Trust no one. Verify everything.</p>
+  </main>
+
+  <footer class="site">DATACENTER GHOST · a KHANA CTF challenge · all names, companies and IPs are fictional</footer>
+  <script src="assets/js/common.js"></script>
+</body>
+</html>

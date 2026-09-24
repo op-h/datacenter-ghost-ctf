@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Datacenter Ghost</title>
+  <meta name="description" content="A browser-based digital forensics CTF. Correlate door, endpoint, DHCP, proxy and DNS logs to catch an insider.">
+  <meta property="og:title" content="Datacenter Ghost — Forensics CTF">
+  <meta property="og:description" content="Case #CHIMERA-99: 2.5 GB of prototype blueprints left the building. Find out who, how, and where it went.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/ghost.css">
+  <style>
+    .hero { padding: 36px 0 8px; }
+    .hero h1 span { color: var(--accent); }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 36px; }
+    .stat { border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; background: var(--panel); }
+    .stat b { display: block; font-family: var(--mono); font-size: 22px; color: #fff; }
+    .stat span { font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-faint); }
+    .ticker { font-family: var(--mono); font-size: 13px; color: var(--text-dim); background: #000; border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; margin-top: 28px; overflow-x: auto; white-space: pre; }
+    .ticker .r { color: var(--red); } .ticker .g { color: var(--accent); } .ticker .a { color: var(--amber); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">DATACENTER<span>GHOST</span></a>
+    <nav class="nav">
+      <a class="active" href="index.html">Case</a>
+      <a href="briefing.html">Briefing</a>
+      <a href="blueprint.html">Blueprint</a>
+      <a href="console.html">Evidence Console</a>
+      <a href="submit.html">Submit Flag</a>
+    </nav>
+    <div class="clock" data-clock>--:--:-- UTC</div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="tags">
+        <span class="tag red"><span class="dot"></span> Active incident</span>
+        <span class="tag">Forensics · SQL · Log correlation</span>
+        <span class="tag amber">Difficulty: Hard</span>
+      </div>
+      <p class="eyebrow">CipherTech Global · Case #CHIMERA-99</p>
+      <h1>Somebody walked <span>2.5&nbsp;GB</span> of Project Chimera out of the building.</h1>
+      <p class="lead">On 14 November 2023 the IDS flagged a sustained upload leaving CipherTech HQ. The data was the mask set for
+        a prototype quantum processor. The logs point at a trusted researcher, but the logs don't tell the whole story.
+        You get the full evidence database, a floor plan and a SQL console. Nothing else.</p>
+      <div class="actions">
+        <a class="btn" href="briefing.html">Read the briefing →</a>
+        <a class="btn ghost" href="console.html">Open evidence console</a>
+      </div>
+
+      <div class="ticker" aria-label="Incident feed"><span class="faint">2023-11-14 15:13:52Z</span>  <span class="r">[HIGH]</span>  LOCAL Sustained large upload to egress proxy (&gt;2 GB in 10 min)
+<span class="faint">2023-11-14 15:16:02Z</span>  <span class="a">[PAGE]</span>  INC-7731 acknowledged by IT Operations
+<span class="faint">2023-11-15 09:00:00Z</span>  <span class="g">[CASE]</span>  Forensic snapshot sealed · ciphertech.db · 19 tables</div>
+
+      <div class="stats">
+        <div class="stat"><b>19</b><span>evidence tables</span></div>
+        <div class="stat"><b>6</b><span>answers in the flag</span></div>
+        <div class="stat"><b>34</b><span>suspects on payroll</span></div>
+        <div class="stat"><b>0</b><span>servers needed</span></div>
+      </div>
+    </section>
+
+    <h2>How to play</h2>
+    <div class="grid cols-3">
+      <a class="card" href="briefing.html">
+        <span class="num">01</span>
+        <h3>Briefing</h3>
+        <p>The incident, the six questions you must answer and the flag format.</p>
+        <span class="go">open →</span>
+      </a>
+      <a class="card" href="blueprint.html">
+        <span class="num">02</span>
+        <h3>Facility blueprint</h3>
+        <p>Floor plans with every badge reader. You'll need them to follow people through the building.</p>
+        <span class="go">open →</span>
+      </a>
+      <a class="card" href="console.html">
+        <span class="num">03</span>
+        <h3>Evidence console</h3>
+        <p>A full SQLite engine running in your browser. Query, join, pivot. Nothing leaves your machine.</p>
+        <span class="go">open →</span>
+      </a>
+      <a class="card" href="submit.html">
+        <span class="num">04</span>
+        <h3>Submit flag</h3>
+        <p>Check your answer locally. The flag isn't stored anywhere on this site, so there's nothing to scrape.</p>
+        <span class="go">open →</span>
+      </a>
+    </div>
+
+    <div class="callout cyan" style="margin-top:28px">
+      <p><b>Prefer your own tools?</b> Download <a href="evidence/ciphertech.db" download>ciphertech.db</a> and open it
+        with <code>sqlite3</code>, DB Browser for SQLite, DuckDB, pandas or anything else you like.</p>
+    </div>
+  </main>
+
+  <footer class="site">DATACENTER GHOST · a KHANA CTF challenge · all names, companies and IPs are fictional</footer>
+  <script src="assets/js/common.js"></script>
+</body>
+</html>

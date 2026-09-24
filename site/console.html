@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evidence Console</title>
+  <meta name="description" content="In-browser SQLite console for the Datacenter Ghost evidence database.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/ghost.css">
+  <link rel="stylesheet" href="assets/css/console.css">
+</head>
+<body class="console-page">
+  <header class="topbar">
+    <a class="brand" href="index.html">DATACENTER<span>GHOST</span></a>
+    <nav class="nav">
+      <a href="index.html">Case</a>
+      <a href="briefing.html">Briefing</a>
+      <a href="blueprint.html">Blueprint</a>
+      <a class="active" href="console.html">Evidence Console</a>
+      <a href="submit.html">Submit Flag</a>
+    </nav>
+    <div class="clock" data-clock>--:--:-- UTC</div>
+  </header>
+
+  <div class="console">
+    <aside class="side">
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="schema" role="tab">Schema</button>
+        <button class="tab" data-tab="notes" role="tab">Notes</button>
+        <button class="tab" data-tab="decoder" role="tab">Decoder</button>
+      </div>
+
+      <section class="pane active" id="pane-schema">
+        <input type="text" id="schema-filter" placeholder="filter tables / columns…" autocomplete="off" spellcheck="false">
+        <ul id="schema" class="schema"><li class="faint">loading…</li></ul>
+        <p class="side-help">Click a table to see its columns. <b>▶</b> previews it. Click a column name to insert it into the editor.</p>
+      </section>
+
+      <section class="pane" id="pane-notes">
+        <textarea id="notes" spellcheck="false" placeholder="Case notes. Saved in this browser only.&#10;&#10;- suspects&#10;- timeline&#10;- things that don't add up"></textarea>
+        <p class="side-help">Notes stay on this device.</p>
+      </section>
+
+      <section class="pane" id="pane-decoder">
+        <label class="lab" for="dec-in">Input</label>
+        <textarea id="dec-in" rows="4" spellcheck="false" placeholder="paste encoded text"></textarea>
+        <div class="dec-btns">
+          <button class="btn ghost sm" data-dec="b64d">Base64 → text</button>
+          <button class="btn ghost sm" data-dec="hexd">Hex → text</button>
+          <button class="btn ghost sm" data-dec="b64e">text → Base64</button>
+          <button class="btn ghost sm" data-dec="rot13">ROT13</button>
+        </div>
+        <label class="lab" for="dec-out">Output</label>
+        <textarea id="dec-out" rows="4" readonly spellcheck="false"></textarea>
+      </section>
+    </aside>
+
+    <main class="main">
+      <div class="editor-wrap">
+        <div class="editor-bar">
+          <span class="file mono">ciphertech.db <span class="faint" id="db-meta"></span></span>
+          <div class="bar-right">
+            <select id="examples" aria-label="Example queries"><option value="">Examples…</option></select>
+            <select id="history" aria-label="Query history"><option value="">History…</option></select>
+          </div>
+        </div>
+        <textarea id="sql" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="SQL editor">-- Welcome, investigator. Start by reading where each table came from.
+SELECT * FROM log_sources;</textarea>
+        <div class="editor-actions">
+          <button class="btn" id="run" disabled>▶ Run <kbd>Ctrl</kbd>+<kbd>Enter</kbd></button>
+          <button class="btn ghost sm" id="clear">Clear</button>
+          <button class="btn ghost sm" id="export" disabled>Export CSV</button>
+          <a class="btn ghost sm" href="evidence/ciphertech.db" download>Download .db</a>
+          <span class="status mono" id="status">loading SQLite engine…</span>
+        </div>
+      </div>
+      <div class="results" id="results">
+        <div class="empty">
+          <p class="mono">Results appear here.</p>
+          <p class="faint">Standard SQLite SQL. Type <code>.help</code> for console commands. Selecting text and pressing
+            <kbd>Ctrl</kbd>+<kbd>Enter</kbd> runs only the selection.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/common.js"></script>
+  <script src="assets/vendor/sql-wasm.js"></script>
+  <script src="assets/js/console.js"></script>
+</body>
+</html>
