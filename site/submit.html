@@ -47,7 +47,7 @@
 
     <form id="flag-form" autocomplete="off">
       <div class="row">
-        <input type="text" id="flag" name="flag" spellcheck="false" placeholder="KHANA{hostname_owner_ghost_exitid_dropip_filename}" aria-label="Flag">
+        <input type="text" id="flag" name="flag" spellcheck="false" placeholder="OPSEC{hostname_owner_ghost_exitid_dropip_filename}" aria-label="Flag">
         <button class="btn" id="check" type="submit"><span class="spinner"></span><span class="lbl">Verify</span></button>
       </div>
       <div class="parts" id="parts" aria-live="polite"></div>
@@ -97,7 +97,7 @@
     }
 
     function split(flag) {
-      var m = /^khana\{(.*)\}$/i.exec(flag);
+      var m = /^opsec\{(.*)\}$/i.exec(flag);
       return m ? m[1].split("_") : null;
     }
 
@@ -137,7 +137,7 @@
       e.preventDefault();
       var flag = input.value.trim().replace(/\s+/g, "");
       var parts = split(flag);
-      if (!parts) { show("<p>That doesn't look like a flag. It should start with <code>KHANA{</code> and end with <code>}</code>.</p>", "red"); return; }
+      if (!parts) { show("<p>That doesn't look like a flag. It should start with <code>OPSEC{</code> and end with <code>}</code>.</p>", "red"); return; }
       if (parts.length !== P.parts) {
         show("<p>Expected <b>" + P.parts + "</b> answers separated by underscores, found <b>" + parts.length + "</b>. None of the answers contain an underscore.</p>", "red");
         return;

@@ -37,7 +37,7 @@ HR interviews. Correlate them and answer six questions:
 | 6 | What exactly was stolen? | a decoded file name |
 
 ```
-KHANA{hostname_owner_ghost_exitid_dropip_filename}
+OPSEC{hostname_owner_ghost_exitid_dropip_filename}
 ```
 
 Every answer has at least one convincing wrong answer sitting next to it: clocks that don't agree, inventory that's out

@@ -4,6 +4,6 @@ window.GHOST_VERIFY = {
   "alg": "PBKDF2-SHA256",
   "iterations": 1000000,
   "salt": "ec3712fcfc8c618ea55334e544968aec",
-  "hash": "49de4e7000bb098c967816e802ca4e842683d7fc3b44e6cb2ae5ea2478290c0d",
+  "hash": "708793d7a10e4bec09f7e0face78a27e32ec1ed1aa7a10f3a75e4d72f989f810",
   "parts": 6
 };
