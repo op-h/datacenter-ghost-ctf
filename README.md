@@ -128,7 +128,7 @@ practical, so the only way to get the flag is to solve the case.
 
 ## Credits
 
-- Challenge and story: **[@op-h](https://github.com/op-h)** for KHANA CTF
+- Challenge and story: **[@op-h](https://github.com/op-h)** for OPSecurity CTF
 - In-browser SQLite: [sql.js](https://github.com/sql-js/sql.js) (MIT, see `site/assets/vendor/LICENSE-sql.js.txt`)
 - Fonts: Inter and JetBrains Mono via Google Fonts
 
